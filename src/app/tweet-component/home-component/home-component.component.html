@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            
+        </div>
+        <div class="col-sm-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class= "postTweetCard row">
+                            <p>@{{userName | uppercase}}</p>
+                            <form [formGroup] = "postTweetForm"(ngSubmit)= "postTweetMsg()">
+                                <div class="col-sm-12 mb-4"><input type="text-area" formControlName = "tweetMsg" placeholder="What's happening ?" class="postTweet"></div>
+                                <div class="col-sm-12"><button class="btn btn-primary btn-sm btn-width" style="float: right;">Post</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    <div class="tweetCard" *ngFor = "let t of tweets">
+                        <app-tweet-msg [tweet] = "t"></app-tweet-msg>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="tweetHeader">
+            <p *ngIf = "firstName">@{{firstName}}</p>
+        </div>
+        <div class="tweetBody">
+            <p>{{msg}}</p>
+        </div>
+        <div class=" row">
+            <div class="col-sm-6 likeAlign">
+                <button class="btn btn-primary like"(click) = "likeCount(tweet.id)">Like</button>
+                <!-- <p class="countStyle" id="likesCount">{{tweet.like}}</p> -->
+                <div id="{{tweet.id}}" class="countStyle" [innerHtml] = "tweet.like"></div>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-success editStyle" *ngIf = "enableEdit" (click) = "editTweetMsg()">Edit</button>
+                <!-- <modal #editModal>
+                    
+                </modal> -->
+            </div>
+        </div>
+        
+    </div>
+</div>

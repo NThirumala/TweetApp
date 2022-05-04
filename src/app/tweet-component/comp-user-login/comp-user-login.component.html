@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-lg-6 formalign">
+            <div class="loginCard">
+                <form [formGroup] = "loginform" (ngSubmit) = "login()">
+                    <div class="col-sm-12">
+                        <div class="row mt-10">
+                            <div class="col-sm-6"><label for="username">User Name: </label></div>
+                            <div class="col-sm-6"><input id="username" type="text" formControlName="username"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                     <div class="row mt-10">
+                        <div class="col-sm-6"><label for="password">Password: </label></div>
+                        <div class="col-sm-6"><input id="passworde" type="text" formControlName="password"></div>
+                     </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row justify-content-center mt-10">
+                            <button class="btn btn-primary btn-sm btn-width">Login</button>
+                        </div>
+                    </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>

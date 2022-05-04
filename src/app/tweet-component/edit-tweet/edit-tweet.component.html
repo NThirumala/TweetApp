@@ -1,0 +1,25 @@
+<!-- <modal>
+    <modal-header>
+        Modal as a component
+    </modal-header>
+   
+    <modal-content>
+        <span>{{data}}</span>
+        Modal body content goes there.
+    </modal-content>
+   
+    <modal-footer>
+        Modal footer content goes there.
+    </modal-footer>
+  </modal> -->
+  <div style="min-width: 500px;">
+    <button type="button" class="close" (click) = "activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class= "postTweetCard row">
+        <form [formGroup] = "updateTweetForm"(ngSubmit)= "updateTweetMsg()">
+            <div class="col-sm-12 tweetText"><input type="text-area" formControlName = "tweetText" class="postTweet"></div>
+            <div class="col-sm-12"><button class="btn btn-primary btn-sm btn-width" style="float: right;">Update</button></div>
+        </form>
+    </div>
+</div>
