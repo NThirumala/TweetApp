@@ -40,7 +40,7 @@ export class TweetMsgComponent implements OnInit {
       if(userData.email === sessionStorage.getItem('username')){
         this.enableEdit = true;
       }
-      console.log(userData);
+      console.log(userData); 
     });
   }
   likeCount(id:string){
