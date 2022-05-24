@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-lg-6 formalign">
+            <div class="userDetailCard">
+                <form [formGroup] = "registrationForm" (ngSubmit) = "register()">
+                    <div class="col-sm-12">
+                        <div class="row mt-10">
+                            <div class="col-sm-6"><label for="firstname">First Name: </label></div>
+                            <div class="col-sm-6"><input id="firstname" type="text" formControlName="firstname"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mt-10">
+                            <div class="col-sm-6"><label for="lastname">Last Name: </label></div>
+                            <div class="col-sm-6"><input id="lastname" type="text" formControlName="lastname"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                     <div class="row mt-10">
+                        <div class="col-sm-6"><label for="gender">Gender: </label></div>
+                        <div class="col-sm-6"><input id="gender" type="text" formControlName="gender"></div>
+                     </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="row mt-10">
+                        <div class="col-sm-6"><label for="dob">Date Of Birth: </label></div>
+                        <div class="col-sm-6"><input id="dob" type="text" formControlName="dob" placeholder="dd-MON-yyyy"></div>
+                    </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="row mt-10">
+                        <div class="col-sm-6"><label for="email">Email: </label></div>
+                        <div class="col-sm-6"><input id="email" type="text" formControlName="email"></div>
+                    </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="row mt-10">
+                        <div class="col-sm-6"><label for="password">Password: </label></div>
+                        <div class="col-sm-6"><input id="password" type="text" formControlName="password"></div>
+                    </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="row mt-10">
+                        <div class="col-sm-6"><label for="cpassword">Confirm Password: </label></div>
+                        <div class="col-sm-6"><input id="cpassword" type="text" formControlName="cpassword"></div>
+                    </div>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="row mt-10">
+                        <div class="col-sm-6"><label for="contactnumber">Contact Number: </label></div>
+                        <div class="col-sm-6"><input id="contactnumber" type="text" formControlName="contactnumber"></div>
+                    </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="justify-content-center mt-10">
+                            <button class="btn btn-primary btn-sm btn-width">Register</button>
+                        </div>
+                    </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>

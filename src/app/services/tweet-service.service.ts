@@ -39,6 +39,17 @@ export class TweetServiceService {
    }
    updateTweetMsg(request: Tweet): Observable<any>{
      this.createOptions();
-    return this.http.post<any>(environment.updateTweetUrl, request, this.options)
+    return this.http.post<any>(environment.updateTweetUrl, request, this.options);
+  }
+  deleteTweet(request :Tweet) : Observable<any> {
+    // this.createOptions();
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: request
+  };
+    return this.http.delete<any>(environment.deleteTweetUrl, httpOptions);
+  }
+  replyTweet(request : any) : Observable<any> {
+    this.createOptions();
+    return this.http.post<any>(environment.replyTweetUrl, request, this.options);
   }
 }

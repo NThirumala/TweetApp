@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 col-lg-6 formalign">
-            <div class="loginCard">
+            <div class="userDetailCard">
                 <form [formGroup] = "loginform" (ngSubmit) = "login()">
                     <div class="col-sm-12">
                         <div class="row mt-10">
@@ -16,9 +16,10 @@
                      </div>
                     </div>
                     <div class="col-sm-12">
-                        <div class="row justify-content-center mt-10">
+                        <div class="justify-content-center mt-10">
                             <button class="btn btn-primary btn-sm btn-width">Login</button>
                         </div>
+                        <div class="mt-1">Don't have an account ? <a routerLink = "/register">Sign up</a></div>
                     </div>
                  </form>
             </div>

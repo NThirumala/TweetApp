@@ -42,4 +42,16 @@ export class UserServiceService {
     this.options = {headers : this.headers}
      return this.http.get<any>(environment.getUser, this.options);
    }
+   adduser(request : any) : Observable<any>{
+    console.log(request);
+    this.createOptions();
+    console.log(this.options);
+    return this.http.post<any> (environment.adduser,request,this.options)
+  }
+  resetpassword(request : any) : Observable<any>{
+    console.log(request);
+    this.createOptions();
+    console.log(this.options);
+    return this.http.post<any> (environment.resetPasswordUrl,request,this.options)
+  }
 }

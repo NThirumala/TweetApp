@@ -15,6 +15,9 @@ import { EditTweetComponent } from './tweet-component/edit-tweet/edit-tweet.comp
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngb-modal';
+import { CompUserRegisterComponent } from './tweet-component/comp-user-register/comp-user-register.component';
+import { ResetPasswordComponent } from './tweet-component/reset-password/reset-password.component';
+import { ReplyTweetComponent } from './tweet-component/reply-tweet/reply-tweet.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { ModalModule } from 'ngb-modal';
     HomeComponentComponent,
     NavbarComponent,
     TweetMsgComponent,
-    EditTweetComponent
+    EditTweetComponent,
+    CompUserRegisterComponent,
+    ResetPasswordComponent,
+    ReplyTweetComponent
   ],
   imports: [
     HttpClientModule,

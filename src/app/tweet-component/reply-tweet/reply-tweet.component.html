@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class= "replyTweetCard row">
+            <p>@{{firstName | uppercase}}</p>
+            <form [formGroup] = "replyTweetForm"(ngSubmit)= "postReplyTweetMsg()">
+                <div class="col-sm-12 mb-4"><input type="text-area" formControlName = "replyTweetMsg" placeholder="Reply msg... !" class="replyTweet"></div>
+                <div class="col-sm-12"><button class="btn btn-primary btn-sm btn-width" style="float: right;">Post</button></div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.replyTweetCard {
+    border-radius: 5px;
+    margin: 15px;
+    padding: 25px;
+}
+.replyTweet {
+    padding: 7px;
+    width:70%;
+    border-top: 0px; 
+    border-left: 0px; 
+    border-right: 0px;
+    &:focus-visible {
+        outline: none !important;
+    }
+}

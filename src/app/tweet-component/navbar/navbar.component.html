@@ -3,13 +3,17 @@
    <div class="flex-child"><a routerLink = "/home" style="text-decoration: none;color: white; font-size: 21px;">Tweet App</a></div>
     <div class="flex-child"><ul>
       <li>
-        Home
+        Tweets
       </li>
       <li>
         All Users
       </li>
       <li>
-        logout
+        <form [formGroup] = "accountForm">
+        <select formControlName = "account" (change) = "reset($event)" style="background-color: #0071bc; color: white; border: none;">
+          <option *ngFor = "let opt of accountList">{{opt}}</option>
+        </select>
+        </form>
       </li>
     </ul></div>
   </div>

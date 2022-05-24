@@ -9,7 +9,11 @@ export const environment = {
   getAllTweets: 'http://localhost:8081/tweet/all',
   getUser: 'http://localhost:8081/user',
   likeTweetUrl : 'http://localhost:8081/tweet/like',
-  updateTweetUrl : 'http://localhost:8081/tweet/update'
+  updateTweetUrl : 'http://localhost:8081/tweet/update',
+  adduser : 'http://localhost:8081/user/save',
+  resetPasswordUrl : 'http://localhost:8081/user/forgotPassword',
+  deleteTweetUrl : 'http://localhost:8081/tweet/delete',
+  replyTweetUrl : 'http://localhost:8081/tweet/reply'
 };
 
 /*

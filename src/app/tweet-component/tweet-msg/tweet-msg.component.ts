@@ -1,10 +1,13 @@
+import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalManager } from 'ngb-modal';
 import { TweetServiceService } from 'src/app/services/tweet-service.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { EditTweetComponent } from '../edit-tweet/edit-tweet.component';
 import { User } from '../home-component/model/User';
+import { ReplyTweetComponent } from '../reply-tweet/reply-tweet.component';
 @Component({
   selector: 'app-tweet-msg',
   templateUrl: './tweet-msg.component.html',
@@ -18,18 +21,27 @@ export class TweetMsgComponent implements OnInit {
 
   // private modalReference : any;
   enableEdit: boolean = false;
+  enableReply : boolean = false;
+  enableDelete : boolean = false;
+  postedTime: any;
   // modalRef: any;
   constructor(private userService: UserServiceService,
               private tweetService : TweetServiceService,
-              private modalService : NgbModal
+              private modalService : NgbModal,
+              private router : Router,
+              private datePipe :DatePipe
               // private modalService : ModalManager
               ) { 
   }
   ngOnInit(): void {
     this.getUserDetails();
-    // console.log(this.tweet);
+    console.log(this.tweet);
     this.msg = this.tweet.tweetMsg;
 
+    // const currentTime = this.datePipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+    // console.log("posted Time : "+ this.tweet.time + "Current Time "+ currentTime);
+    // this.postedTime = 
+    
   }
   getUserDetails(){
     const email = this.tweet.email !== null ? this.tweet.email : '';
@@ -39,6 +51,9 @@ export class TweetMsgComponent implements OnInit {
       this.firstName = tweetUser.firstName;
       if(userData.email === sessionStorage.getItem('username')){
         this.enableEdit = true;
+        this.enableDelete = true;
+      }else{
+        this.enableReply = true;
       }
       console.log(userData); 
     });
@@ -63,5 +78,25 @@ export class TweetMsgComponent implements OnInit {
   }
   closeModal(){
     this.modalService.dismissAll();
+  }
+  deleteTweetMsg(){
+    this.tweetService.deleteTweet(this.tweet).subscribe(() => {
+      this.reloadComponent();
+    });
+  }
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
+  replyTweet(){
+    const modalRef = this.modalService.open(ReplyTweetComponent ,{ariaLabelledBy : 'Reply Tweet modal',});
+    const currentUser = sessionStorage.getItem('CurrentUser');
+    const user =JSON.parse( currentUser !== null ? currentUser : '');
+    const userName = user.firstName;
+    modalRef.componentInstance.firstName = userName;
+    console.log(this.tweet.id);
+    modalRef.componentInstance.parentTweeetId = this.tweet.id;
   }
 }
