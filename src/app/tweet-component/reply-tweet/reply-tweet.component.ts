@@ -1,5 +1,4 @@
 import { DatePipe } from '@angular/common';
-import { ReturnStatement } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TweetServiceService } from 'src/app/services/tweet-service.service';
@@ -33,13 +32,15 @@ export class ReplyTweetComponent implements OnInit {
     const like = 0;
     const tagText = '';
     const replyTweet: Tweet[] = [];
-    const tweet = new Tweet('',email, tweetMsg, this.time, like, tagText, replyTweet);
+    const tweet = new Retweet(this.parentTweeetId,email, tweetMsg, this.time, like, tagText, replyTweet);
+    console.log(this.parentTweeetId);
     console.log(tweet);
-    const parentTweetId = this.parentTweeetId;
-    const request = new Retweet(tweet ,parentTweetId);
+    // const parentTweetId = this.parentTweeetId;
+    // const request = new Retweet(tweet ,parentTweetId);
+    const request = tweet;
     console.log(request);
     this.tweetService.replyTweet(request).subscribe(data => {
       console.log(data);
-    })
+    });
   }
 }

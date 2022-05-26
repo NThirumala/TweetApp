@@ -46,7 +46,7 @@ export class HomeComponentComponent implements OnInit {
     const like = 0;
     const tagText = '';
     const replyTweet: Tweet[] = [];
-    const request = new Tweet('',email, tweetMsg, this.time, like, tagText, replyTweet);
+    const request = new Tweet(email, tweetMsg, this.time, like, tagText, replyTweet);
     console.log(request);
     this.tweetService.postTweetMsg(request).subscribe(data =>{
       console.log(data);

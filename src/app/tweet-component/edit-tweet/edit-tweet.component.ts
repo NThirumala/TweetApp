@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { Tweet } from '../home-component/model/Tweet';
 import { TweetServiceService } from 'src/app/services/tweet-service.service';
 import { Router } from '@angular/router';
+import { Retweet } from '../home-component/model/Retweet';
 
 @Component({
   selector: 'app-edit-tweet',
@@ -39,9 +40,10 @@ export class EditTweetComponent implements OnInit {
     this.updateTweetForm.controls['tweetText'].reset();
     const like = 0;
     const replyTweet: Tweet[] = [];
-    const request = new Tweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
-    console.log(request);
-    this.tweetService.updateTweetMsg(request).subscribe((data: any) =>{
+    // const request = new Tweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
+    const editRequest = new Retweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
+    console.log(editRequest);
+    this.tweetService.updateTweetMsg(editRequest).subscribe((data: any) =>{
       console.log(data);
       // this. getAllTweets();
       // this.router.navigate(['/home']);

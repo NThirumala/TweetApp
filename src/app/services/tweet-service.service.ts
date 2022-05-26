@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Retweet } from '../tweet-component/home-component/model/Retweet';
 import { Tweet } from '../tweet-component/home-component/model/Tweet';
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class TweetServiceService {
     this.options = {headers : this.headers}
      return this.http.get<any>(environment.likeTweetUrl,this.options)
    }
-   updateTweetMsg(request: Tweet): Observable<any>{
+   updateTweetMsg(request: Retweet): Observable<any>{
      this.createOptions();
     return this.http.post<any>(environment.updateTweetUrl, request, this.options);
   }
@@ -50,6 +51,7 @@ export class TweetServiceService {
   }
   replyTweet(request : any) : Observable<any> {
     this.createOptions();
+    console.log(request);
     return this.http.post<any>(environment.replyTweetUrl, request, this.options);
   }
 }

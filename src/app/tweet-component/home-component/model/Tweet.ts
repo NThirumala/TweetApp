@@ -1,5 +1,5 @@
 export class Tweet {
-    private id : String;
+    // private id : String;
     private email : String;
     private tweetMsg : String;
     private time : String;
@@ -7,13 +7,15 @@ export class Tweet {
     private tagText : String;
     private replyTweet : Array<Tweet>;
 
-    constructor(id :String, email : String,
+    constructor(
+        // id :String,
+         email : String,
          tweetMsg : String,
          time : String,
          like : number,
          tagText : String,
          replyTweet : Array<Tweet>,){
-             this.id = id;
+            //  this.id = id;
              this.email = email;
              this.tweetMsg = tweetMsg;
              this.time = time;
