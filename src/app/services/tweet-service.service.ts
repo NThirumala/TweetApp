@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Retweet } from '../tweet-component/home-component/model/Retweet';
@@ -12,7 +13,7 @@ export class TweetServiceService {
   headers : any;
   options : any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
    }
    createOptions(){
      this.headers = new HttpHeaders({
@@ -53,5 +54,11 @@ export class TweetServiceService {
     this.createOptions();
     console.log(request);
     return this.http.post<any>(environment.replyTweetUrl, request, this.options);
+  }
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }

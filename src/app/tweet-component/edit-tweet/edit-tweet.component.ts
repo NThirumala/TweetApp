@@ -47,17 +47,11 @@ export class EditTweetComponent implements OnInit {
       console.log(data);
       // this. getAllTweets();
       // this.router.navigate(['/home']);
-      this.reloadComponent();
+      this.tweetService.reloadComponent();
       console.log(this.router.url);
       this.activeModal.dismiss();
     });
   }
-  reloadComponent() {
-    let currentUrl = this.router.url;
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate([currentUrl]);
-    }
   // getAllTweets(){
   //   this.tweetService.getAllTweets().subscribe(data =>{
   //   console.log(data);

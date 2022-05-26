@@ -7,7 +7,7 @@ export class AuthService {
   constructor() { }
 
   public getToken(): any {
-    console.log("Getting token form Session");
+    // console.log("Getting token form Session");
     return sessionStorage.getItem('access-Token');
   }
 

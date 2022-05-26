@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TweetServiceService } from 'src/app/services/tweet-service.service';
 import { Retweet } from '../home-component/model/Retweet';
 import { Tweet } from '../home-component/model/Tweet';
@@ -19,7 +20,7 @@ export class ReplyTweetComponent implements OnInit {
   });
   time : any;
 
-  constructor(private datepipe:DatePipe, private tweetService :TweetServiceService) { }
+  constructor(private datepipe:DatePipe, private tweetService :TweetServiceService,public activeModal : NgbActiveModal, ) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +42,8 @@ export class ReplyTweetComponent implements OnInit {
     console.log(request);
     this.tweetService.replyTweet(request).subscribe(data => {
       console.log(data);
+      this.tweetService.reloadComponent();
+      this.activeModal.dismiss();
     });
   }
 }

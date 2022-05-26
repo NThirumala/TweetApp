@@ -1,11 +1,15 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="row tweetHeader">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <p *ngIf = "firstName">@{{firstName}}</p>
             </div>
-            <div class="col-sm-6">
-                <!-- <p>{{postedTime}}</p> -->
+            <div class="col-sm-5">
+                <h6 *ngIf = "tTime > 0">{{tTime}} {{tMeasure}}</h6>
+                <h6 *ngIf = "tTime == 0">{{tMeasure}}</h6>
+            </div>
+            <div class="col-sm-3" *ngIf = "enableReply">
+                
                 <a href="javascript:void(0)" style="float: right; text-decoration: none;" (click)= "replyTweet()">Reply</a>
             </div>
         </div>
@@ -24,6 +28,18 @@
                 
             </div>
         </div>
-        
+        <div class="row"*ngIf ="enableReplySection">
+            <h2 style="font-size: 18px; margin-top: 5px;">Comments</h2>
+            <div class = "row" style="background-color: #ede9e8; margin-left: 4px;padding: 7px;" *ngFor = "let reply of comments">
+                <div class="row"><div class="col-sm-4">
+                    <h6>{{reply.time}}</h6></div><div class="col-sm-5"><h6>@{{reply.name}}</h6></div>
+                </div>
+                <div class="col-sm-6" style="margin-top: 7px;">{{reply.tweetMsg}}
+                </div>
+                <div class="col-sm-6">
+                    <a href="javascript:void(0)" style="float: right; text-decoration: none;">Reply</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
