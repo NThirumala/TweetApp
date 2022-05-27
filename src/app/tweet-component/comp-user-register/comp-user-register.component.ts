@@ -25,11 +25,14 @@ export class CompUserRegisterComponent implements OnInit {
     contactnumber : new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
   });
   cpassError: boolean = false;
+  registrationFailed: boolean = false;
+  msg: any;
   constructor(private userService : UserServiceService, private router : Router) { }
 
   ngOnInit(): void {
   }
   register(){
+    this.registrationFailed = false;
         this.userpassword = this.registrationForm.controls.password.value;
         this.usercpassword = this.registrationForm.controls.cpassword.value;
         if(this.userpassword.localeCompare(this.usercpassword.toString()) == 0){
@@ -43,7 +46,12 @@ export class CompUserRegisterComponent implements OnInit {
           );
           this.userService.adduser(request).subscribe(data => {
             console.log(data);
-            this.router.navigate(['/login']);
+            if(data.StatusCode === "200"){
+            this.router.navigate(['/login']);}
+            else if (data.StatusCode === "11000"){
+              this.registrationFailed = true;
+              this.msg = data.Description;
+            }
           });
         }
         else {
