@@ -48,22 +48,22 @@ export class TweetMsgComponent implements OnInit {
     this.currentTime = tm !== null ? tm : '';
 
     this.diff = this.getDataDiff(new Date(this.tweet.time), new Date(this.currentTime));
-    console.log(this.diff);
+    // console.log(this.diff);
 
     this.getTweetTime(this.diff);
 
     this.tweet.replyTweet.forEach((ele: { time: string | number | Date; id: any; email: String }) => {
-      console.log(ele);
+      // console.log(ele);
       const diff = this.getDataDiff(new Date(ele.time), new Date(this.currentTime));
-      console.log(diff);
+      // console.log(diff);
       this.getTweetTime(diff, true, ele.id);
     });
   }
   getTweetTime(t: { day: any; hour: number; minute: number; second: number; mon: number, year: number }, retweet?: boolean, retweetId?: any) {
     this.time = 0;
-    console.log(t);
+    // console.log(t);
     if (t.year > 0) {
-      console.log("assigning year value");
+      // console.log("assigning year value");
       this.time = t.year;
       if (this.time > 1) {
         this.measure = "years ago";
@@ -80,7 +80,7 @@ export class TweetMsgComponent implements OnInit {
         this.measure = "month ago";
       }
     } else if (t.day > 0) {
-      console.log("assigning days value");
+      // console.log("assigning days value");
 
       this.time = t.day;
       if (this.time > 1) {
@@ -90,7 +90,7 @@ export class TweetMsgComponent implements OnInit {
       }
     } else if (t.hour > 0) {
       //   return t.hour;
-      console.log("assigning hour value");
+      // console.log("assigning hour value");
 
       this.time = t.hour;
       if (this.time > 1) {
@@ -100,7 +100,7 @@ export class TweetMsgComponent implements OnInit {
       }
     } else if (t.minute > 0) {
       // return t.minute;
-      console.log("assigning minute value");
+      // console.log("assigning minute value");
 
       this.time = t.minute;
       if (this.time > 1) {
@@ -109,7 +109,7 @@ export class TweetMsgComponent implements OnInit {
         this.measure = "minute ago";
       }
     } else if (t.second > 0) {
-      console.log("assigning second value");
+      // console.log("assigning second value");
       // return t.second;
       this.time = t.second;
       if (this.time > 1) {
@@ -120,9 +120,9 @@ export class TweetMsgComponent implements OnInit {
     } else {
       this.measure = "Just now";
     }
-    console.log(this.time + " " + this.measure + " " + retweetId);
+    // console.log(this.time + " " + this.measure + " " + retweetId);
     if (retweet) {
-      console.log(this.time + " " + this.measure + " " + retweetId);
+      // console.log(this.time + " " + this.measure + " " + retweetId);
       this.tweet.replyTweet.forEach((temp: { email: String; time: string | number | Date; id: any; }) => {
         if (temp.id === retweetId) {
           if (this.time > 0) {
@@ -130,7 +130,7 @@ export class TweetMsgComponent implements OnInit {
           } else {
             temp.time = this.measure;
           }
-          console.log(temp);
+          // console.log(temp);
           this.getUserDetails(temp.email, temp.id, true);
           // this.comments.push(temp);
         }
@@ -138,7 +138,7 @@ export class TweetMsgComponent implements OnInit {
     } else {
       this.tTime = this.time;
       this.tMeasure = this.measure;
-      console.log(this.tTime + " " + this.tMeasure);
+      // console.log(this.tTime + " " + this.tMeasure);
 
       this.time = 0;
       this.measure = '';
@@ -168,7 +168,7 @@ export class TweetMsgComponent implements OnInit {
     let tweetUser: User;
     this.userService.getUser(email).subscribe(userData => {
       if (userData) {
-        tweetUser = new User('', userData.firstName, userData.lastname, '', '', userData.email, '', '');
+        tweetUser = new User(userData.firstName, userData.lastname, '', '', userData.email, '', '');
         if (reply) {
           this.tweet.replyTweet.forEach((no: { id: any; email: any; tweetMsg: any; time: any; like: any; }) => {
             if (no.id === id) {
@@ -178,8 +178,8 @@ export class TweetMsgComponent implements OnInit {
               })
             }
           });
-          console.log(id);
-          console.log(this.comments);
+          // console.log(id);
+          // console.log(this.comments);
         } else {
           this.firstName = tweetUser.firstName;
           if (userData.email === sessionStorage.getItem('username')) {
@@ -194,13 +194,13 @@ export class TweetMsgComponent implements OnInit {
 
   }
   likeCount(id: string) {
-    console.log("user liked" + id);
-    console.log(this.tweet.id);
+    // console.log("user liked" + id);
+    // console.log(this.tweet.id);
     this.tweetService.likeTweet(id).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data !== null) {
         const count = document.getElementById(id)!;
-        console.log(count);
+        // console.log(count);
         count.innerHTML = data.like;
       }
     });
@@ -225,7 +225,7 @@ export class TweetMsgComponent implements OnInit {
     const user = JSON.parse(currentUser !== null ? currentUser : '');
     const userName = user.firstName;
     modalRef.componentInstance.firstName = userName;
-    console.log(this.tweet.id);
+    // console.log(this.tweet.id);
     modalRef.componentInstance.parentTweeetId = this.tweet.id;
   }
 }

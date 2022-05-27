@@ -16,46 +16,51 @@ import { Retweet } from '../home-component/model/Retweet';
 export class EditTweetComponent implements OnInit {
 
   // @ViewChild(ModalComponent) ModalComponent: any;
+  length: number = 0;
   @Input() tweetData: any;
-  updateTweetForm = new FormGroup(
-    {
-      tweetText : new FormControl('')
-    }
-  )
+  emptyTweet :boolean = false;
+  updateTweetForm = new FormGroup({
+      tweetText: new FormControl('')
+    });
   time: any;
   tweets: any;
-  constructor(public activeModal : NgbActiveModal, private tweetService : TweetServiceService,
-    private router : Router,private datepipe:DatePipe) { }
+  tweetLengthError: boolean = false;
+  constructor(public activeModal: NgbActiveModal, private tweetService: TweetServiceService,
+    private router: Router, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     console.log("editing Tweet ");
     this.updateTweetForm.controls.tweetText.setValue(this.tweetData.tweetMsg);
     console.log(this.tweetData);
   }
-  updateTweetMsg(){
-    this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
-    const currentUser = sessionStorage.getItem('username');
-    const email = currentUser !== null ? currentUser : '';
-    const tweetMsg = this.updateTweetForm.value.tweetText;
-    this.updateTweetForm.controls['tweetText'].reset();
-    const like = 0;
-    const replyTweet: Tweet[] = [];
-    // const request = new Tweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
-    const editRequest = new Retweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
-    console.log(editRequest);
-    this.tweetService.updateTweetMsg(editRequest).subscribe((data: any) =>{
-      console.log(data);
-      // this. getAllTweets();
-      // this.router.navigate(['/home']);
-      this.tweetService.reloadComponent();
-      console.log(this.router.url);
-      this.activeModal.dismiss();
-    });
+  updateTweetMsg() {
+    this.emptyTweet= false;
+    this.tweetLengthError = false;
+
+    this.length = this.updateTweetForm.controls.tweetText.value.length;
+    if(this.length !== 0){
+      if (this.length <= 144) {
+      this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+      const currentUser = sessionStorage.getItem('username');
+      const email = currentUser !== null ? currentUser : '';
+      const tweetMsg = this.updateTweetForm.value.tweetText;
+      this.updateTweetForm.controls['tweetText'].reset();
+      const like = 0;
+      const replyTweet: Tweet[] = [];
+      // const request = new Tweet(this.tweetData.id ,email, tweetMsg, this.time, like, '', replyTweet);
+      const editRequest = new Retweet(this.tweetData.id, email, tweetMsg, this.time, like, '', replyTweet);
+      console.log(editRequest);
+      this.tweetService.updateTweetMsg(editRequest).subscribe((data: any) => {
+        console.log(data);
+        this.tweetService.reloadComponent();
+        console.log(this.router.url);
+        this.activeModal.dismiss();
+      });
+    }else{
+      this.tweetLengthError = true;
+    }
+  }else {
+    this.emptyTweet = true;
   }
-  // getAllTweets(){
-  //   this.tweetService.getAllTweets().subscribe(data =>{
-  //   console.log(data);
-  //   this.tweets = data;
-  //   });
-  // }
+  }
 }

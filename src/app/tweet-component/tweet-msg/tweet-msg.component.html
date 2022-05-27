@@ -15,7 +15,7 @@
         </div>
         
         <div class="tweetBody">
-            <p>{{msg}}</p>
+            <p style="overflow-wrap: break-word;">{{msg}}</p>
         </div>
         <div class=" row">
             <div class="col-sm-6 likeAlign">
@@ -34,7 +34,7 @@
                 <div class="row"><div class="col-sm-4">
                     <h6>{{reply.time}}</h6></div><div class="col-sm-5"><h6>@{{reply.name}}</h6></div>
                 </div>
-                <div class="col-sm-6" style="margin-top: 7px;">{{reply.tweetMsg}}
+                <div class="col-sm-6" style="margin-top: 7px; overflow-wrap: break-word;">{{reply.tweetMsg}}
                 </div>
                 <div class="col-sm-6">
                     <a href="javascript:void(0)" style="float: right; text-decoration: none;">Reply</a>

@@ -11,52 +11,60 @@ import { User } from './model/User';
   styleUrls: ['./home-component.component.scss']
 })
 export class HomeComponentComponent implements OnInit {
-  time : any;
-  user : any;
-  userName : any = '';
+  time: any;
+  user: any;
+  userName: any = '';
   tweets: any = [];
   tweetLengthError: boolean = false;
-  constructor(private datepipe:DatePipe, private tweetService: TweetServiceService) {
+  length: number = 0;
+  emptyTweet: boolean = false;
+  constructor(private datepipe: DatePipe, private tweetService: TweetServiceService) {
     const loggedInUser = sessionStorage.getItem('CurrentUser');
     console.log(loggedInUser);
-    this.user =JSON.parse( loggedInUser !== null ? loggedInUser : '');
+    this.user = JSON.parse(loggedInUser !== null ? loggedInUser : '');
     this.userName = this.user.firstName;
     console.log(this.user);
     console.log(this.userName);
   }
-  getAllTweets(){
-    this.tweetService.getAllTweets().subscribe(data =>{
-    console.log(data);
-    this.tweets = data;
+  getAllTweets() {
+    this.tweetService.getAllTweets().subscribe(data => {
+      console.log(data);
+      this.tweets = data;
     });
   }
   ngOnInit(): void {
-    
+
     this.getAllTweets();
   }
   postTweetForm = new FormGroup({
-    tweetMsg : new FormControl('')
+    tweetMsg: new FormControl('')
   });
- 
-  postTweetMsg(){
+
+  postTweetMsg() {
+    this.tweetLengthError = false;
+    this.emptyTweet = false;
     console.log(this.postTweetForm.controls.tweetMsg.value.length);
-    if(this.postTweetForm.controls.tweetMsg.value.length > 144) {
-      this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
-      const currentUser = sessionStorage.getItem('username');
-      const email = currentUser !== null ? currentUser : '';
-      const tweetMsg = this.postTweetForm.value.tweetMsg;
-      this.postTweetForm.controls['tweetMsg'].reset();
-      const like = 0;
-      const tagText = '';
-      const replyTweet: Tweet[] = [];
-      const request = new Tweet(email, tweetMsg, this.time, like, tagText, replyTweet);
-      console.log(request);
-      this.tweetService.postTweetMsg(request).subscribe(data =>{
-        console.log(data);
-      this. getAllTweets();
-      });
-    }else{
-      this.tweetLengthError = true;
+    this.length = this.postTweetForm.controls.tweetMsg.value.length;
+    if (this.length == 0) {
+      this.emptyTweet = true;
     }
+    else if (this.length <= 144) {
+        this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+        const currentUser = sessionStorage.getItem('username');
+        const email = currentUser !== null ? currentUser : '';
+        const tweetMsg = this.postTweetForm.value.tweetMsg;
+        this.postTweetForm.controls['tweetMsg'].reset();
+        const like = 0;
+        const tagText = '';
+        const replyTweet: Tweet[] = [];
+        const request = new Tweet(email, tweetMsg, this.time, like, tagText, replyTweet);
+        console.log(request);
+        this.tweetService.postTweetMsg(request).subscribe(data => {
+          console.log(data);
+          this.getAllTweets();
+        });
+      } else {
+        this.tweetLengthError = true;
+      }
   }
 }

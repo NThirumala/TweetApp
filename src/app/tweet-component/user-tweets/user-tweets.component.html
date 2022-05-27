@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+<div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8" *ngIf = "!noTweets">
+            <div class="row">
+                <div class="col-sm-12">
+                <div class="tweetCard" *ngFor = "let t of tweets">
+                    <app-tweet-msg [tweet] = "t"></app-tweet-msg>
+                </div>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 nolist error" *ngIf = "noTweets">No tweets found for given user.</div>
+</div>

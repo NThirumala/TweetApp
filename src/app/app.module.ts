@@ -18,6 +18,8 @@ import { ModalModule } from 'ngb-modal';
 import { CompUserRegisterComponent } from './tweet-component/comp-user-register/comp-user-register.component';
 import { ResetPasswordComponent } from './tweet-component/reset-password/reset-password.component';
 import { ReplyTweetComponent } from './tweet-component/reply-tweet/reply-tweet.component';
+import { UserTweetsComponent } from './tweet-component/user-tweets/user-tweets.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ReplyTweetComponent } from './tweet-component/reply-tweet/reply-tweet.c
     EditTweetComponent,
     CompUserRegisterComponent,
     ResetPasswordComponent,
-    ReplyTweetComponent
+    ReplyTweetComponent,
+    UserTweetsComponent
   ],
   imports: [
     HttpClientModule,
@@ -45,7 +48,7 @@ import { ReplyTweetComponent } from './tweet-component/reply-tweet/reply-tweet.c
       provide: HTTP_INTERCEPTORS,  
       useClass: TokenInterceptor,  
       multi: true  
-    } ],
+    }, AuthGuard ],
   bootstrap: [AppComponent],
   entryComponents: [ EditTweetComponent ]
 })

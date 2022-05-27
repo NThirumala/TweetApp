@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
     console.log(this.passwordForm.value);
     const username = sessionStorage.getItem('username');
     const email = username !== null ? username : '';
-    const request = new User('','','','','',email,this.passwordForm.controls.newPassword.value,'');
+    const request = new User('','','','',email,this.passwordForm.controls.newPassword.value,'');
     this.userService.resetpassword(request).subscribe(data => {
       console.log(data);
       this.closeModal();

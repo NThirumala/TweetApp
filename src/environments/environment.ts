@@ -13,7 +13,8 @@ export const environment = {
   adduser : 'http://localhost:8081/user/save',
   resetPasswordUrl : 'http://localhost:8081/user/forgotPassword',
   deleteTweetUrl : 'http://localhost:8081/tweet/delete',
-  replyTweetUrl : 'http://localhost:8081/tweet/reply'
+  replyTweetUrl : 'http://localhost:8081/tweet/reply',
+  userTweetsUrl : 'http://localhost:8081/tweet/user'
 };
 
 /*

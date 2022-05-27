@@ -34,7 +34,7 @@ export class CompUserRegisterComponent implements OnInit {
         this.usercpassword = this.registrationForm.controls.cpassword.value;
         if(this.userpassword.localeCompare(this.usercpassword.toString()) == 0){
           console.log("registering new User" + " "+  this.registrationForm.controls.firstname.value);
-          const request = new User('', this.registrationForm.controls.firstname.value,
+          const request = new User(this.registrationForm.controls.firstname.value,
           this.registrationForm.controls.lastname.value,
           this.registrationForm.controls.gender.value,
           this.registrationForm.controls.dob.value,

@@ -18,7 +18,10 @@
     </button>
     <div class= "postTweetCard row">
         <form [formGroup] = "updateTweetForm"(ngSubmit)= "updateTweetMsg()">
-            <div class="col-sm-12 tweetText"><input type="text-area" formControlName = "tweetText" class="postTweet"></div>
+            <div class="col-sm-12 tweetText">
+                <div class="row"><div class="col-sm-12 error" *ngIf = "emptyTweet">Tweet message length must not be 0 characters.</div></div>
+                <div class="row"><div class="col-sm-12 error" *ngIf = "tweetLengthError">Tweet message length is {{updateTweetForm.controls.tweetText.value.length}}. It must not exceed 144 characters.</div></div>
+                <input type="text-area" formControlName = "tweetText" class="postTweet"></div>
             <div class="col-sm-12"><button class="btn btn-primary btn-sm btn-width" style="float: right;">Update</button></div>
         </form>
     </div>

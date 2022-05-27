@@ -12,7 +12,8 @@ export class TweetServiceService {
  
   headers : any;
   options : any;
-
+  userTweetList : any[] = [];
+  listNotFound : boolean = false;
   constructor(private http: HttpClient, private router: Router) {
    }
    createOptions(){
@@ -60,5 +61,16 @@ export class TweetServiceService {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
+  }
+  // this.userTweetList = this.getUserTweets();
+   getUserTweets(email : string): Observable<any> {
+     this.userTweetList = [];
+    console.log(email);
+    this.headers = new HttpHeaders({
+     'Content-Type' : 'application/json',
+     'email' : email
+   });
+   this.options = {headers : this.headers}
+    return this.http.get<any>(environment.userTweetsUrl,this.options);
   }
 }

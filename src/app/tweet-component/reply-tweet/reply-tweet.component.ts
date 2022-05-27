@@ -19,13 +19,22 @@ export class ReplyTweetComponent implements OnInit {
     replyTweetMsg : new FormControl('')
   });
   time : any;
+  length: number = 0;
+  emptyReply: boolean = false;
+  lengthError: boolean = false;
 
   constructor(private datepipe:DatePipe, private tweetService :TweetServiceService,public activeModal : NgbActiveModal, ) { }
 
   ngOnInit(): void {
   }
   postReplyTweetMsg(){
-    this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+    this.emptyReply = false;
+    this.lengthError = false;
+
+    this.length = this.replyTweetForm.controls.replyTweetMsg.value.length
+    if( this.length >0) {
+
+    if(this.length <= 144){this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
     const currentUser = sessionStorage.getItem('username');
     const email = currentUser !== null ? currentUser : '';
     const tweetMsg = this.replyTweetForm.value.replyTweetMsg;
@@ -45,5 +54,11 @@ export class ReplyTweetComponent implements OnInit {
       this.tweetService.reloadComponent();
       this.activeModal.dismiss();
     });
+  }else{
+    this.lengthError = true;
+  }
+  }else{
+    this.emptyReply = true;
+  }
   }
 }

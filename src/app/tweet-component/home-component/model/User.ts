@@ -1,5 +1,5 @@
 export class User {
-   id: String
+  //  id: String
 	 firstName: String
 	 lastname: String
 	 gender: String
@@ -8,7 +8,8 @@ export class User {
 	 password: String
 	 contactnumber: String
 
-    constructor(  id: String,
+    constructor( 
+      //  id: String,
           firstName: String,
           lastname: String,
           gender: String,
@@ -16,7 +17,7 @@ export class User {
           email: String,
           password: String,
           contactnumber: String){
-            this.id= id;
+            // this.id= id;
             this.firstName= firstName;
             this.lastname= lastname;
             this.gender= gender;
