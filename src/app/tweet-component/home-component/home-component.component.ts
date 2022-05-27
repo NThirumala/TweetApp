@@ -15,6 +15,7 @@ export class HomeComponentComponent implements OnInit {
   user : any;
   userName : any = '';
   tweets: any = [];
+  tweetLengthError: boolean = false;
   constructor(private datepipe:DatePipe, private tweetService: TweetServiceService) {
     const loggedInUser = sessionStorage.getItem('CurrentUser');
     console.log(loggedInUser);
@@ -38,19 +39,24 @@ export class HomeComponentComponent implements OnInit {
   });
  
   postTweetMsg(){
-    this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
-    const currentUser = sessionStorage.getItem('username');
-    const email = currentUser !== null ? currentUser : '';
-    const tweetMsg = this.postTweetForm.value.tweetMsg;
-    this.postTweetForm.controls['tweetMsg'].reset();
-    const like = 0;
-    const tagText = '';
-    const replyTweet: Tweet[] = [];
-    const request = new Tweet(email, tweetMsg, this.time, like, tagText, replyTweet);
-    console.log(request);
-    this.tweetService.postTweetMsg(request).subscribe(data =>{
-      console.log(data);
-     this. getAllTweets();
-    });
+    console.log(this.postTweetForm.controls.tweetMsg.value.length);
+    if(this.postTweetForm.controls.tweetMsg.value.length > 144) {
+      this.time = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+      const currentUser = sessionStorage.getItem('username');
+      const email = currentUser !== null ? currentUser : '';
+      const tweetMsg = this.postTweetForm.value.tweetMsg;
+      this.postTweetForm.controls['tweetMsg'].reset();
+      const like = 0;
+      const tagText = '';
+      const replyTweet: Tweet[] = [];
+      const request = new Tweet(email, tweetMsg, this.time, like, tagText, replyTweet);
+      console.log(request);
+      this.tweetService.postTweetMsg(request).subscribe(data =>{
+        console.log(data);
+      this. getAllTweets();
+      });
+    }else{
+      this.tweetLengthError = true;
+    }
   }
 }

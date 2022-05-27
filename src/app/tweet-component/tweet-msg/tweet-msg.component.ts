@@ -18,30 +18,30 @@ export class TweetMsgComponent implements OnInit {
   @Input() tweet: any;
 
   enableEdit: boolean = false;
-  enableReply : boolean = false;
-  enableDelete : boolean = false;
+  enableReply: boolean = false;
+  enableDelete: boolean = false;
   // postedTime: any;
   enableReplySection: boolean = false;
-  diff: { day: number; hour: number; minute: number; second: number; } | undefined;
+  diff: { day: number; hour: number; minute: number; second: number; mon: number; year: number } | undefined;
   tTime: number = 0;
   tMeasure: string = '';
-  time: number =0;
+  time: number = 0;
   measure: string = '';
   currentTime: string = '';
-  comments: any[] =[];
+  comments: any[] = [];
   constructor(private userService: UserServiceService,
-              private tweetService : TweetServiceService,
-              private modalService : NgbModal,
-              private router : Router,
-              private datePipe :DatePipe
-              ) { 
+    private tweetService: TweetServiceService,
+    private modalService: NgbModal,
+    private router: Router,
+    private datePipe: DatePipe
+  ) {
   }
   ngOnInit(): void {
     const email = this.tweet.email !== null ? this.tweet.email : '';
     this.getUserDetails(email);
     // console.log(this.tweet);
     this.msg = this.tweet.tweetMsg;
-    if(this.tweet.replyTweet.length !== 0){
+    if (this.tweet.replyTweet.length !== 0) {
       this.enableReplySection = true;
     }
     const tm = this.datePipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
@@ -49,72 +49,97 @@ export class TweetMsgComponent implements OnInit {
 
     this.diff = this.getDataDiff(new Date(this.tweet.time), new Date(this.currentTime));
     console.log(this.diff);
-    this.getTweetTime(this.diff);
-    // console.log(this.tweet.replyTweet);
 
-    this.tweet.replyTweet.forEach((ele: { time: string | number | Date; id: any; email:String }) => {
-     console.log(ele);
-    //  this.getUserDetails(ele.email, ele.id, true);
-     const diff = this.getDataDiff(new Date(ele.time), new Date(this.currentTime));
-     console.log(diff);
-     this.getTweetTime(diff, true, ele.id);
-   });
+    this.getTweetTime(this.diff);
+
+    this.tweet.replyTweet.forEach((ele: { time: string | number | Date; id: any; email: String }) => {
+      console.log(ele);
+      const diff = this.getDataDiff(new Date(ele.time), new Date(this.currentTime));
+      console.log(diff);
+      this.getTweetTime(diff, true, ele.id);
+    });
   }
-  getTweetTime(t: { day: any; hour: number; minute: number; second: number; }, retweet?:boolean, retweetId?:any){
+  getTweetTime(t: { day: any; hour: number; minute: number; second: number; mon: number, year: number }, retweet?: boolean, retweetId?: any) {
     this.time = 0;
     console.log(t);
-    if(t.day > 0){
+    if (t.year > 0) {
+      console.log("assigning year value");
+      this.time = t.year;
+      if (this.time > 1) {
+        this.measure = "years ago";
+      } else {
+        this.measure = "year ago";
+      }
+    } else if (t.mon > 0) {
+      console.log("assigning month value");
+
+      this.time = t.mon;
+      if (this.time > 1) {
+        this.measure = "months ago";
+      } else {
+        this.measure = "month ago";
+      }
+    } else if (t.day > 0) {
+      console.log("assigning days value");
+
       this.time = t.day;
-      if(this.time > 1){
+      if (this.time > 1) {
         this.measure = "days ago";
-      }else{
+      } else {
         this.measure = "day ago";
       }
-    }else if(t.hour > 0){
-    //   return t.hour;
-    this.time = t.hour;
-    if(this.time > 1){
-      this.measure = "hours ago";
-    }else{
-      this.measure = "hour ago";
-    }
-    }else if(t.minute > 0){
+    } else if (t.hour > 0) {
+      //   return t.hour;
+      console.log("assigning hour value");
+
+      this.time = t.hour;
+      if (this.time > 1) {
+        this.measure = "hours ago";
+      } else {
+        this.measure = "hour ago";
+      }
+    } else if (t.minute > 0) {
       // return t.minute;
+      console.log("assigning minute value");
+
       this.time = t.minute;
-      if(this.time > 1){
+      if (this.time > 1) {
         this.measure = "minutes ago";
-      }else{
+      } else {
         this.measure = "minute ago";
       }
-    }else if(t.second > 0){
+    } else if (t.second > 0) {
+      console.log("assigning second value");
       // return t.second;
       this.time = t.second;
-      if(this.time > 1){
+      if (this.time > 1) {
         this.measure = "seconds ago";
-      }else{
+      } else {
         this.measure = "second ago";
       }
-    }else {
+    } else {
       this.measure = "Just now";
     }
-    console.log(this.time+ " "+ this.measure+ " "+ retweetId);
-    if(retweet){
-      console.log(this.time+ " "+ this.measure+ " "+ retweetId);
-      this.tweet.replyTweet.forEach((temp: {email:String; time: string | number | Date; id: any; }) => {
-        if(temp.id === retweetId){
-          if(this.time >0){
-          temp.time = this.time+ " "+ this.measure;
-          }else{
+    console.log(this.time + " " + this.measure + " " + retweetId);
+    if (retweet) {
+      console.log(this.time + " " + this.measure + " " + retweetId);
+      this.tweet.replyTweet.forEach((temp: { email: String; time: string | number | Date; id: any; }) => {
+        if (temp.id === retweetId) {
+          if (this.time > 0) {
+            temp.time = this.time + " " + this.measure;
+          } else {
             temp.time = this.measure;
           }
-        console.log(temp);
-        this.getUserDetails(temp.email, temp.id, true);
-        // this.comments.push(temp);
+          console.log(temp);
+          this.getUserDetails(temp.email, temp.id, true);
+          // this.comments.push(temp);
         }
       });
-    }else{
+    } else {
       this.tTime = this.time;
       this.tMeasure = this.measure;
+      console.log(this.tTime + " " + this.tMeasure);
+
       this.time = 0;
       this.measure = '';
     }
@@ -125,62 +150,79 @@ export class TweetMsgComponent implements OnInit {
     var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
     var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
     var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
-    return { day: days, hour: hours, minute: minutes, second: seconds };
+    var mon = 0;
+    var year = 0;
+    // days = 778;
+    if (days > 31) {
+      mon = Math.floor(days / 31);
+      days = Math.round(days % 31);
+    }
+    if (mon > 12) {
+      year = Math.floor(mon / 12);
+      mon = Math.round(mon % 12);
+    }
+    return { day: days, hour: hours, minute: minutes, second: seconds, mon: mon, year: year };
   }
-  getUserDetails(email: String, id?:any, reply?:boolean){
+  getUserDetails(email: String, id?: any, reply?: boolean) {
     // console.log(email);
-    this.userService.getUser(email).subscribe(userData =>{
-      const tweetUser = new User ('',userData.firstName, userData.lastname,'','', userData.email,'','');
-      if(reply){
-        this.tweet.replyTweet.forEach((no: { id: any; email: any; tweetMsg: any; time: any; like: any; }) => {
-          if(no.id === id){
-            this.comments.push({'id': no.id, 'email':no.email, 'tweetMsg':no.tweetMsg,
-             'time': no.time,'like':no.like, 'name':tweetUser.firstName})
+    let tweetUser: User;
+    this.userService.getUser(email).subscribe(userData => {
+      if (userData) {
+        tweetUser = new User('', userData.firstName, userData.lastname, '', '', userData.email, '', '');
+        if (reply) {
+          this.tweet.replyTweet.forEach((no: { id: any; email: any; tweetMsg: any; time: any; like: any; }) => {
+            if (no.id === id) {
+              this.comments.push({
+                'id': no.id, 'email': no.email, 'tweetMsg': no.tweetMsg,
+                'time': no.time, 'like': no.like, 'name': tweetUser.firstName
+              })
+            }
+          });
+          console.log(id);
+          console.log(this.comments);
+        } else {
+          this.firstName = tweetUser.firstName;
+          if (userData.email === sessionStorage.getItem('username')) {
+            this.enableEdit = true;
+            this.enableDelete = true;
+          } else {
+            this.enableReply = true;
           }
-        });
-        console.log(id);
-        console.log(this.comments);
-      }else{
-        this.firstName = tweetUser.firstName;
-        if(userData.email === sessionStorage.getItem('username')){
-          this.enableEdit = true;
-          this.enableDelete = true;
-        }else{
-          this.enableReply = true;
         }
       }
     });
+
   }
-  likeCount(id:string){
+  likeCount(id: string) {
     console.log("user liked" + id);
     console.log(this.tweet.id);
     this.tweetService.likeTweet(id).subscribe((data: any) => {
       console.log(data);
-      if(data !== null){
-        const count  = document.getElementById(id)!;
+      if (data !== null) {
+        const count = document.getElementById(id)!;
         console.log(count);
         count.innerHTML = data.like;
       }
     });
   }
-  editTweetMsg(){
-    const modalRef = this.modalService.open(EditTweetComponent,{ariaLabelledBy : 'Tweet edit modal',});
+  editTweetMsg() {
+    const modalRef = this.modalService.open(EditTweetComponent, { ariaLabelledBy: 'Tweet edit modal', });
     modalRef.componentInstance.tweetData = this.tweet;
-    
+
   }
-  closeModal(){
+  closeModal() {
     this.modalService.dismissAll();
   }
-  deleteTweetMsg(){
+  deleteTweetMsg() {
     this.tweetService.deleteTweet(this.tweet).subscribe(() => {
       this.tweetService.reloadComponent();
     });
   }
-  
-  replyTweet(){
-    const modalRef = this.modalService.open(ReplyTweetComponent ,{ariaLabelledBy : 'Reply Tweet modal',});
+
+  replyTweet() {
+    const modalRef = this.modalService.open(ReplyTweetComponent, { ariaLabelledBy: 'Reply Tweet modal', });
     const currentUser = sessionStorage.getItem('CurrentUser');
-    const user =JSON.parse( currentUser !== null ? currentUser : '');
+    const user = JSON.parse(currentUser !== null ? currentUser : '');
     const userName = user.firstName;
     modalRef.componentInstance.firstName = userName;
     console.log(this.tweet.id);

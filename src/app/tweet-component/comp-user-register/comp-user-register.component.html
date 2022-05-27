@@ -3,6 +3,12 @@
         <div class="col-sm-12 col-lg-6 formalign">
             <div class="userDetailCard">
                 <form [formGroup] = "registrationForm" (ngSubmit) = "register()">
+                    
+                    <div class="col-sm-12 error" *ngIf = "registrationForm.controls.dob.errors?.pattern">Date of Birth must be in dd-MM-YYYY format</div>
+                    <div class="col-sm-12 error" *ngIf = "cpassError">Password and Confirm Password should be same</div>
+                    <div class="col-sm-12 error" *ngIf = "registrationForm.controls.contactnumber.errors?.pattern">Phone number must contain 10 digits</div>
+                    <div class="col-sm-12 error" *ngIf = "registrationForm.controls.email.errors?.pattern">Email not valid</div>
+
                     <div class="col-sm-12">
                         <div class="row mt-10">
                             <div class="col-sm-6"><label for="firstname">First Name: </label></div>
@@ -53,7 +59,7 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="justify-content-center mt-10">
-                            <button class="btn btn-primary btn-sm btn-width">Register</button>
+                            <button type="submit" [disabled] = "!registrationForm.valid" class="btn btn-primary btn-sm btn-width">Register</button>
                         </div>
                     </div>
                  </form>

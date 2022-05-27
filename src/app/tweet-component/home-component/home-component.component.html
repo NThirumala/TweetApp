@@ -7,6 +7,7 @@
         <div class="col-sm-8">
             <div class="container">
                 <div class="row">
+                    <div class="col-sm-12 error" *ngIf = "tweetLengthError">Tweet message length must not exceed 144 characters.</div>
                     <div class="col-sm-12">
                         <div class= "postTweetCard row">
                             <p>@{{userName | uppercase}}</p>
