@@ -31,12 +31,14 @@ export class CompUserLoginComponent implements OnInit {
         if(data.code === "200"){
           sessionStorage.setItem("access-Token", data.access_token);
           sessionStorage.setItem("username", data.username);
+          sessionStorage.setItem("credentials", JSON.stringify(this.loginform.value));
           const currentUser = sessionStorage.getItem('username');
           const email = currentUser !== null ? currentUser : '';
           this.userService.getUser(email).subscribe(data1 =>{
           sessionStorage.setItem("CurrentUser", JSON.stringify(data1));
           const res = sessionStorage.getItem('CurrentUser')
           console.log(res);
+
           this.router.navigate(['/home']);
           });
         }
